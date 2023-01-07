@@ -1,0 +1,163 @@
+<section class="heading-content">
+    <div class="heade">
+        <div class="row">
+            <div class="col" style="padding-left: 90px;">
+                <h2> Algoblend Online Free CV Maker</h2>
+                <button type="button" class="btn btn-primary">Get Start</button>
+            </div>
+            <div class="col">
+                <img src="assets\img\shutterstock_1513723706.jpg" alt="resume" height="500px" width="600px">
+            </div>
+
+        </div>
+        <div class="row" style="padding: 90px 10px 10px 30px ;">
+            <div class="col">
+                <i class="fa fa-edit"></i>Easy to Create and customise
+            </div>
+            <div class="col">
+                <i class="fa fa-desktop"></i>Hundreds of free Templates and Layouts
+            </div>
+            <div class="col">
+                <i class="fa fa-image"></i>Professional Designed and formatted
+            </div>
+            <div class="col">
+                <i class="fa fa-font"></i>Styles for Every industry
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <div class="templates">
+        <div class="tempt">
+            <p>With Algoblend Online Free CV Maker ,
+                applying for yourdream job is quickand easy. <br> Choose from hundreds
+                of
+                free, designer-made templates and customize them with just a few clicks.</p>
+            <img src="assets\img\resume.b48d9625.avif" alt="resume" width="800px" height="400px">
+            <p style="padding-top: 30px;">Forget spending hours formatting your resume, or choosing complimentary fonts
+                for your cover letter.<br>
+
+                Creating a resume online with Canva’s free resume builder will give you a sleek and attractive
+                resume,<br> without the fuss.
+                Choose from hundreds of free, designer-made templates, and customize them within<br> minutes.
+                With a few simple clicks, you can change the colors, fonts, layout, and add graphics to suit <br>the job
+                you’re applying for.
+
+                Let us help you with the design, so you can focus on promoting your<br> skills and landing your dream
+                job.
+            </p>
+        </div>
+    </div>
+</section>
+<section class="professional-templates">
+    <div class="professional">
+        <h1>Modern & Professional job-ready<br> resume templates</h1>
+        <p>Each of Algoblend Cv Maker templates is designed keeping in mind the modern HR recruiter. Our<br>
+            templates are unique, HR tested, and make you stand out from the crowd of applicants.</p>
+        <br>
+        <button class="btn btn-warning" type="button">Build your Cv</button>
+
+        <div class="header">
+            <!--Content before waves-->
+            <div class="inner-header flex">
+                <!--Just the logo.. Don't mind this-->
+            </div>
+        </div>
+        <!--Waves Container-->
+        <div>
+            <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                <defs>
+                    <path id="gentle-wave"
+                        d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                </defs>
+                <g class="parallax">
+                    <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+                    <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+                    <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+                    <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+                </g>
+            </svg>
+            <!--Waves end-->
+            <div id="slider-container" class="slider">
+                <div class="slide">
+                    <a href="/deshboard-template" >
+                    <img src="assets\img\lisbon-resume-templates.avif" alt="">
+
+                    </a>
+                </div>
+                <div class="slide">
+                    <img src="assets\img\vienna-resume-templates.avif" alt="">
+                </div>
+                <div class="slide">
+                    <img src="assets\img\toronto-resume-templates.avif" alt="">
+                </div>
+                <div class="slide">
+                    <img src="assets\img\sydney-resume-templates.avif" alt="">
+                </div>
+                <div class="slide">
+                    <img src="assets\img\rome-resume-templates.webp" alt="">
+                </div>
+                <div class="slide">
+                    <img src="assets\img\new-york-resume-templates.avif" alt="">
+                </div>
+                <div class="slide">
+                    <img src="assets\img\oslo-resume-templates.avif" alt="">
+                </div>
+                <div class="slide">
+                    <img src="assets\img\rio-resume-templates.avif" alt="">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+<section class="Steps">
+    <div class="containers">
+        <h1><b>Four simple steps to a job-winning CV:</b></h1>
+        <div class="step1">
+            <img src="assets\img\Screenshot 2022-11-20 202955.jpg">
+        </div>
+
+    </div>
+
+</section>
+
+<%- include('../deshboardContent/features') %>
+<%- include('../deshboardContent/trustpilot') %>
+<%- include('../deshboardContent/contact') %>
+<%- include('../deshboardContent/footer') %>
+<script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("dot");
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+    }
+</script>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
