@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link href="css/style.css" rel="stylesheet" />
+<title> Register page</title>
+</head>
+
+<body>
+    <section class=" signup">
+
+        <div class="container">
+            <main class="signup-container">
+                
+                <h1 class="heading-primary">Create new account<span class="custom-dot">.</span></h1>
+                <p class="text-mute">Already A Member? <a href="/login">Log in</a></p>
+                <form class="signup-form" action="/register" method="POST" >
+                    <div class="f-row input-wrapper">
+                        <label class="inp">
+                            <input type="text"  name="name" class="input-text"  placeholder="&nbsp;">
+                            <span class="label">Full name</span>
+                            <span class="input-icon"><i class="fa-solid fa-address-card"></i></span>
+                        </label>
+                        
+                    </div>
+                    <% if (messages.error) { %>
+                        <div class="alert alert-danger">
+                          <strong><%= messages.error %> </strong>
+                        </div>
+                      <% } %>  
+                    <label class="inp">
+                        <input type="email" name="email" class="input-text" id="form2Example17" placeholder="&nbsp;">
+                        <span class="label">Email</span>
+                        <span class="input-icon"><i class="fa-solid fa-envelope"></i></span>
+                    </label>
+                    <label class="inp">
+                        <input type="password" class="input-text"  name="password">
+                        <span class="label">Password</span>
+                        <span class="input-icon input-icon-password" data-password><i
+                                class="fa-solid fa-eye"></i></span>
+                    </label>
+                    <button class="btn btn-signup"  type="submit">Create account</button>
+                </form>
+                
+            </main>
+            <div class="welcome-container">
+                <h1 class="heading-secondary">Welcome to <span class="lg">Algoblend Cv Maker</span></h1>
+                <img src="assets\img\ui.jpg"
+                    alt="">
+            </div>
+        </div>
+        <script>
+            const eyeClick = document.querySelector("[data-password]");
+            const password_elem = document.getElementById("password");
+
+            eyeClick.onclick = () => {
+                const icon = eyeClick.children[0];
+                icon.classList.toggle("fa-eye-slash");
+                if (password_elem.type === "password") {
+                    password_elem.type = "text";
+                } else if (password_elem.type === "text") {
+                    password_elem.type = "password";
+                }
+            };
+
+        </script>
+    </section>
+
+</body>
+
+</html>

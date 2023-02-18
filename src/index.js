@@ -1,157 +1,152 @@
-const express = require("express"),
-  app = express();
-
-  const dotenv = require('dotenv');
-const mongoose = require('mongoose')
-
-
-
-dotenv.config();
- 
-
-mongoose.set('strictQuery', false);
-const User = require('../model/user')
-mongoose.connect('mongodb://localhost:27017/login-app-db',{
-useNewUrlparser: true,
-useUnifiedTopology: true
-// useCreateIndex: true,
-// useFindAndModify: false 
+if (process.env.NODE_ENV !== "production") {
+    require("dotenv").config()
 }
+
+
+// Importing libraries that we installed using npm
+
+const passport = require("passport");
+const express = require("express");
+const app = express();
+const bcrypt = require("bcrypt");
+const initializepassport = require("../passport-config");
+const flash = require("express-flash");
+const session = require("express-session");
+const methodOverride = require("method-override");
+
+
+initializepassport(
+  passport,
+  email => users.find(user => user.email === email),
+  id => users.find(user => user.id === id)
 )
 
-  
-  var bodyParser = require('body-parser');
-var jsonParser = bodyParser.json()
-var bcrypt = require('bcryptjs');
+const users = [];
+
+var bodyParser = require('body-parser');
+var jsonParser = bodyParser.json();
 const { response } = require("express");
 app.use(bodyParser.json())
 
-// create application/x-www-form-urlencoded parser
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
+
+
+// create application/x-www-form-urlencoded parser
+// var urlencodedParser = bodyParser.urlencoded({ extended: false })
+app.use(express.urlencoded({extended: false}))
+app.use(flash())
+app.use(session({
+    secret: 'secretidhere',
+    resave: false, // We wont resave the session variable if nothing is changed
+    saveUninitialized: false
+}))
+
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(methodOverride("_method"))
 //setting view engine to ejs
 app.set("view engine", "ejs");
 
 app.use(express.static('public'))
 
-app.get('/', function (req, res) {
+app.get('/', checkNotAuthenticated, (req, res) => {
   res.render('index');
 });
 
-// ============================================================================
-// ============================================================================
 // ======================== my sql database connection=============================
 
-// var mysql = require('mysql');  
-// var con = mysql.createConnection({  
-//   host: "localhost",  
-//   user: "root",  
-//   password: "12345678",  
-//   database: "cv maker"
-// });  
-// con.connect(function(err) {  
-//   if (err) throw err;  
-//   console.log("Connected!");  
-// });  
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "12345678",
+  database: "cv maker"
+});
+con.connect(function (err) {
+  if (err) throw err;
+  console.log(" successfully Connected!");
+});
 
 // login 
 
-app.get('/login', function (req, res) {
+app.get('/login',checkNotAuthenticated,(req, res) => {
   res.render('login')
 });
 
-//  login system
-// app.post('/userLogin', urlencodedParser, function (req, res, next) {
-//   var email = req.body.email;
-//   var password = req.body.password;
-
-//   if (email == "vipin@1.com" && password == "1234") {
-//     res.render('deshboard');
-//   } else {
-//     res.send("invalidcred")
-//   }
-// });
-
-//  End of login system//
-
-app.get('/signUp',function(req,res){
-  res.render('signUp')
+app.get('/register', checkNotAuthenticated, (req, res) =>{
+  res.render('register')
 });
 //  Sign up system
-// app.post('/userSignUp', urlencodedParser, function (req, res, next) {
-//   var email = req.body.email;
-//   var password = req.body.password;
 
-//   if (email == "vipin@12.com" && password == "12345") {
-//     res.render('deshboard');
-//   } else {
-//     res.send("invalidcred")
-//   }
-// });
+//  Configuring the login post functionality
 
+app.post("/login",checkNotAuthenticated,passport.authenticate("local",{
+  successRedirect: "/Home",
+  failureRedirect: "/login",
+  failureFlash: true
+}))
 
-// mongoose registeration
-
-
-
-
-app.post('/api/register',async (req,res)=>{
-console.log(req.body)
-
-//  analysts
-// Scripts reading database
-const {username,password:plaintextPassword} = req.body
-
-if(!username || typeof username !== 'string')
+// Configuring the register post functionality
+app.post("/register",checkNotAuthenticated,async(req,res) =>
 {
-  return res.json({status:'error',error:'Invalid username'})
+  try{
+    const hashedPassword = await bcrypt.hash(req.body.password,10)
+    users.push({
+      id: Date.now().toString(),
+      name: req.body.name,
+      email: req.body.email,
+      password: hashedPassword,
+    })
+console.log(users);//Display newly registered in the console
+
+    res.redirect("/login")
+  }catch(e){
+    console.log(e);
+res.redirect("/register")
+  }
+  })
+
+//  logout your account
+  app.delete("/logout",(req,res) =>{
+    req.logout(req.user,err => {
+      if (err) return next(err)
+      res.redirect("/register")
+    })
+  })
+
+  function checkAuthenticated(req, res, next){
+    if(req.isAuthenticated()){
+        return next()
+    }
+    res.redirect("/login")
 }
-if(!plaintextPassword || typeof plaintextPassword !== 'string')
-{
-  return res.json({status:'error',error:'Invalid password'})
+
+function checkNotAuthenticated(req, res, next){
+    if(req.isAuthenticated()){
+        return res.redirect("/Home")
+    }
+    next()
 }
-if(plaintextPassword.lenght < 5){
-  return res.json
-  ({status:'error',
-  error:' password  too small ,should be atleast 6 characters'})
-}
-console.log(await bcrypt.hash(plaintextPassword,10))
-//  cook->developer
-// Salt,Pepper,Oil,Vegetables -> Password
-// (...,....,....,Salt,Pepper,Oil,Vegetables) -> Food
-// bcrypt,md5,sha1,sha256,sha12...
- try{
-   const response =  await User.Create({
-  username,
-  password
- })
- console.log('User created Successgully: ', response)
- }
- catch(error){
-  // console.log(JSON.stringify(error.message))
-  if(error.code === 11000)
-  // duplicate key
-  return res.json({status:'error',error : 'UserName Already in use'})
- }
- throw error 
-// 1.The collision should be importable
-// 2.The Algorithm Should be slow..
 
-// The Special_function(password) -> fgyu654567890-=uytfvb8767890-ytg65789
-
-// HAsing the password
-res.json({status:'ok'})
-})
-
-//  End of Sign up system//
-
+app.get('/Home', function (req, res) {
+  res.render('deshboard')
+});
 //  Templates
 
-app.get('/deshboard-template', function (req, res) {
+app.get('/Home-template-1', function (req, res) {
   res.render('template/template1')
 });
+app.get('/Home-template-1-exp',function (req, res){
+  res.render('template/template1-exp')
+}); 
 
-
-app.listen(3002, function () {
-  console.log("Server is running on port 3002");
+app.get('/Home-template-1-edu',function (req, res){
+  res.render('template/template1-edu')
+}); 
+app.get('/Home-template-1-skil',function (req, res){
+  res.render('template/template1-skil')
+}); 
+app.listen(3005, function () {
+  console.log("Server is running on port 3005");
 });

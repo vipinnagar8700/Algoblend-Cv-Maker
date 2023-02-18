@@ -81,31 +81,45 @@
             <!--Waves end-->
             <div id="slider-container" class="slider">
                 <div class="slide">
-                    <a href="/deshboard-template" >
-                    <img src="assets\img\lisbon-resume-templates.avif" alt="">
+                    <a href="/Home-template-1">
+                        <img src="assets\img\lisbon-resume-templates.avif" alt="">
 
                     </a>
                 </div>
                 <div class="slide">
-                    <img src="assets\img\vienna-resume-templates.avif" alt="">
+                    <a href="/Home-template-2">
+                        <img src="assets\img\vienna-resume-templates.avif" alt="">
+                    </a>
                 </div>
                 <div class="slide">
-                    <img src="assets\img\toronto-resume-templates.avif" alt="">
+                    <a href="/Home-template-3">
+                        <img src="assets\img\toronto-resume-templates.avif" alt="">
+                    </a>
                 </div>
                 <div class="slide">
-                    <img src="assets\img\sydney-resume-templates.avif" alt="">
+                    <a href="/Home-template-4">
+                        <img src="assets\img\sydney-resume-templates.avif" alt="">
+                    </a>
                 </div>
                 <div class="slide">
-                    <img src="assets\img\rome-resume-templates.webp" alt="">
+                    <a href="/Home-template-5">
+                        <img src="assets\img\rome-resume-templates.webp" alt="">
+                    </a>
                 </div>
                 <div class="slide">
-                    <img src="assets\img\new-york-resume-templates.avif" alt="">
+                    <a href="/Home-template-6">
+                        <img src="assets\img\new-york-resume-templates.avif" alt="">
+                    </a>
                 </div>
                 <div class="slide">
-                    <img src="assets\img\oslo-resume-templates.avif" alt="">
+                    <a href="/Home-template-7">
+                        <img src="assets\img\oslo-resume-templates.avif" alt="">
+                    </a>
                 </div>
                 <div class="slide">
-                    <img src="assets\img\rio-resume-templates.avif" alt="">
+                    <a href="/Home-template-8">
+                        <img src="assets\img\rio-resume-templates.avif" alt="">
+                    </a>
                 </div>
 
             </div>
@@ -125,39 +139,39 @@
 </section>
 
 <%- include('../deshboardContent/features') %>
-<%- include('../deshboardContent/trustpilot') %>
-<%- include('../deshboardContent/contact') %>
-<%- include('../deshboardContent/footer') %>
-<script>
-    let slideIndex = 1;
-    showSlides(slideIndex);
+    <%- include('../deshboardContent/trustpilot') %>
+        <%- include('../deshboardContent/contact') %>
+            <%- include('../deshboardContent/footer') %>
+                <script>
+                    let slideIndex = 1;
+                    showSlides(slideIndex);
 
-    function plusSlides(n) {
-        showSlides(slideIndex += n);
-    }
+                    function plusSlides(n) {
+                        showSlides(slideIndex += n);
+                    }
 
-    function currentSlide(n) {
-        showSlides(slideIndex = n);
-    }
+                    function currentSlide(n) {
+                        showSlides(slideIndex = n);
+                    }
 
-    function showSlides(n) {
-        let i;
-        let slides = document.getElementsByClassName("mySlides");
-        let dots = document.getElementsByClassName("dot");
-        if (n > slides.length) { slideIndex = 1 }
-        if (n < 1) { slideIndex = slides.length }
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-        for (i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
-        }
-        slides[slideIndex - 1].style.display = "block";
-        dots[slideIndex - 1].className += " active";
-    }
-</script>
-<script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
-</script>
+                    function showSlides(n) {
+                        let i;
+                        let slides = document.getElementsByClassName("mySlides");
+                        let dots = document.getElementsByClassName("dot");
+                        if (n > slides.length) { slideIndex = 1 }
+                        if (n < 1) { slideIndex = slides.length }
+                        for (i = 0; i < slides.length; i++) {
+                            slides[i].style.display = "none";
+                        }
+                        for (i = 0; i < dots.length; i++) {
+                            dots[i].className = dots[i].className.replace(" active", "");
+                        }
+                        slides[slideIndex - 1].style.display = "block";
+                        dots[slideIndex - 1].className += " active";
+                    }
+                </script>
+                <script>
+                    $(function () {
+                        $('[data-toggle="tooltip"]').tooltip()
+                    })
+                </script>
